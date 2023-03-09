@@ -29,22 +29,24 @@ app.post("/user/save", (req, res) => {
   res.send(users);
 });
 
-app.patch("/user/update", (req, res) => {
-  console.log(req.body);
-  users.push(req.body);
-  res.send(users);
+app.patch("/user/update/:id", (req, res) => {
+  const { id } = req.params;
+  const filter = { _id: id };
+  const newData = users.find((user) => user.id === Number(id));
+
+  res.send(newData);
 });
 
-app.patch("/user/bulk-update", (req, res) => {
-  console.log(req.body);
-  users.push(req.body);
-  res.send(users);
-});
+// app.patch("/user/bulk-update", (req, res) => {
 
-app.delete("/user/delete", (req, res) => {
-  console.log(req.body);
-  users.push(req.body);
-  res.send(users);
+// });
+
+app.delete("/user/delete/:id", (req, res) => {
+  const { id } = req.params;
+  const filter = { _id: id };
+  const del = users.filter((user) => user.id !== Number(id));
+
+  res.send(del);
 });
 
 app.get("/", (req, res) => {
