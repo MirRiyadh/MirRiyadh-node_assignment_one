@@ -5,33 +5,46 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 
-// const categories = require("./data/categories.json");
-// const courses = require("./data/courses.json");
+const users = require("./data/data.json");
 
-app.get("/categories", (req, res) => {
-  res.send(categories);
+app.get("/user/all", (req, res) => {
+  res.send(single);
 });
 
-app.get("/categories/:id", (req, res) => {
-  const id = req.params.id;
-  if (id === "01") {
-    res.send(courses);
+app.get("/user/random", (req, res) => {
+  function getRandomItem(arr) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    const item = arr[randomIndex];
+    return item;
   }
-  //
-  else {
-    const courseList = courses.filter((n) => n.category_id === id);
-    res.send(courseList);
-  }
+
+  const result = getRandomItem(users);
+  res.json(result);
+  res.send(users);
 });
 
-app.get("/courses", (req, res) => {
-  res.send(courses);
+app.post("/user/save", (req, res) => {
+  console.log(req.body);
+  users.push(req.body);
+  res.send(users);
 });
 
-app.get("/courses/:id", (req, res) => {
-  const id = req.params.id;
-  const singleCourse = courses.find((n) => n.id === id);
-  res.send(singleCourse);
+app.patch("/user/update", (req, res) => {
+  console.log(req.body);
+  users.push(req.body);
+  res.send(users);
+});
+
+app.patch("/user/bulk-update", (req, res) => {
+  console.log(req.body);
+  users.push(req.body);
+  res.send(users);
+});
+
+app.delete("/user/delete", (req, res) => {
+  console.log(req.body);
+  users.push(req.body);
+  res.send(users);
 });
 
 app.get("/", (req, res) => {
